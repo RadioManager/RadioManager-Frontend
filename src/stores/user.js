@@ -1,6 +1,6 @@
-// src/stores/user.js
 import {defineStore} from 'pinia'
 import * as authService from '@/services/auth'
+import * as userService from '@/services/user'
 
 export const useUserStore = defineStore('user', {
     state: () => ({
@@ -10,7 +10,6 @@ export const useUserStore = defineStore('user', {
         error: null,
     }),
     actions: {
-        // Авторизация
         async doLogin({ login, password }) {
             this.loading = true
             this.error = null
@@ -27,7 +26,6 @@ export const useUserStore = defineStore('user', {
                 this.loading = false
             }
         },
-        // Регистрация
         async doRegister(userDto) {
             this.loading = true
             this.error = null
@@ -41,7 +39,6 @@ export const useUserStore = defineStore('user', {
                 this.loading = false
             }
         },
-        // Выход
         async doLogout() {
             this.loading = true
             try {
@@ -50,6 +47,25 @@ export const useUserStore = defineStore('user', {
             } finally {
                 this.profile = null
                 this.isAuth = false
+                this.loading = false
+            }
+        },
+        async updateUserBalance(balance) {
+            this.loading = true
+            this.error = null
+            try {
+                const userId = this.profile?.id
+                if (!userId) {
+                    throw new Error('User not authenticated')
+                }
+                await userService.updateUserBalance(userId, balance)
+                // Update balance in local state
+                this.profile.balance = balance
+                return true
+            } catch (e) {
+                this.error = e.response?.data || e.message
+                return false
+            } finally {
                 this.loading = false
             }
         },
