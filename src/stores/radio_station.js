@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import * as radioStationService from '@/services/radioStation'
+import * as radioStationService from '@/services/radio_station'
 
 export const useRadioStationStore = defineStore('radioStation', {
     state: () => ({

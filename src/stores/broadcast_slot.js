@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import * as broadcastSlotService from '@/services/broadcastSlot'
+import * as broadcastSlotService from '@/services/broadcast_slot'
 
 export const useBroadcastSlotStore = defineStore('broadcastSlot', {
     state: () => ({
