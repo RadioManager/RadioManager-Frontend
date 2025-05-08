@@ -3,14 +3,15 @@ import * as cityService from '@/services/city'
 
 export const useCityStore = defineStore('city', {
     state: () => ({
-        cities: [],         // список всех городов
-        selectedCity: null, // выбранный город
-        loading: false,     // флаг загрузки
-        error: null         // сообщение об ошибке
+        cities: [],
+        selectedCity: null,
+        loading: false,
+        error: null
     }),
     actions: {
         /**
-         * Загрузить все города
+         * Load all cities
+         * @returns {Promise<Array>}
          */
         async loadAllCities() {
             this.loading = true
@@ -26,8 +27,9 @@ export const useCityStore = defineStore('city', {
             }
         },
         /**
-         * Загрузить город по ID
+         * Load a city by its ID
          * @param {number} id
+         * @returns {Promise<Object|null>}
          */
         async loadCityById(id) {
             this.loading = true
@@ -44,9 +46,10 @@ export const useCityStore = defineStore('city', {
             }
         },
         /**
-         * Загрузить город по имени и региону
+         * Load a city by name and region
          * @param {string} name
          * @param {string} region
+         * @returns {Promise<Object|null>}
          */
         async loadCityByNameAndRegion(name, region) {
             this.loading = true
@@ -63,8 +66,9 @@ export const useCityStore = defineStore('city', {
             }
         },
         /**
-         * Загрузить города по региону
+         * Load cities by region
          * @param {string} region
+         * @returns {Promise<Array>}
          */
         async loadCitiesByRegion(region) {
             this.loading = true
@@ -80,8 +84,9 @@ export const useCityStore = defineStore('city', {
             }
         },
         /**
-         * Загрузить города по имени
+         * Load cities by name
          * @param {string} name
+         * @returns {Promise<Array>}
          */
         async loadCitiesByName(name) {
             this.loading = true
@@ -97,8 +102,8 @@ export const useCityStore = defineStore('city', {
             }
         },
         /**
-         * Установить выбранный город
-         * @param {object} city
+         * Set selected city
+         * @param {Object} city
          */
         selectCity(city) {
             this.selectedCity = city
