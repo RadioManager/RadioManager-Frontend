@@ -96,3 +96,13 @@ export async function deleteUser(id) {
 export async function updateUserBalance(userId, balance) {
     await api.put('/user/balance', null, { params: { userId, balance } })
 }
+
+/**
+ * Get available roles for user (authenticated).
+ * GET /user/roles
+ * @returns {Promise<string[]>}
+ */
+export async function getAvailableRoles() {
+    const response = await api.get('/user/roles')
+    return response.data
+}
