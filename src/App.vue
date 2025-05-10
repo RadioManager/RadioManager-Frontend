@@ -1,12 +1,18 @@
 <script setup>
 import { computed } from 'vue'
 import { useUserStore } from '@/stores/user'
-import { useRouter } from 'vue-router'
+import {useRoute, useRouter} from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 
 const userStore = useUserStore()
 const isAuth = computed(() => userStore.isAuth)
 const router = useRouter()
+const route = useRoute()
+
+const authPages = ['Login','Register','ForgotPassword','ResetPassword']
+const showHeader = computed(() =>
+    userStore.isAuth && !authPages.includes(route.name)
+)
 
 function onLogout() {
   userStore.doLogout()
@@ -17,7 +23,7 @@ function onLogout() {
 <template>
   <div id="app">
     <!-- Show header only when authenticated -->
-    <AppHeader v-if="isAuth" @logout="onLogout" />
+    <AppHeader v-if="showHeader" @logout="onLogout" />
 
     <!-- Route outlet: renders Login, Home, etc. -->
     <router-view />
