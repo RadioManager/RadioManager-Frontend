@@ -1,13 +1,16 @@
 <script setup>
-import { onMounted, computed } from 'vue'
+import {onMounted, computed, ref} from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useRadioStationStore } from '@/stores/radio_station'
+import CreateTopUpModal from '@/components/CreateTopUpModal.vue'
 
 const userStore = useUserStore()
 const stationStore = useRadioStationStore()
 
 const profile = computed(() => userStore.profile || {})
 const station = computed(() => stationStore.selectedStation)
+
+const showTopUpModal = ref(false)
 
 const roleLabel = computed(() => {
   switch (profile.value.role) {
@@ -25,11 +28,19 @@ onMounted(() => {
 })
 
 function onTopUp() {
-  alert('Функция пополнения счета пока в разработке')
+  showTopUpModal.value = true
 }
 
 function onHistory() {
   alert('История транзакций пока недоступна')
+}
+
+function onTopUpCompleted() {
+  showTopUpModal.value = false
+}
+
+function onModalClose() {
+  showTopUpModal.value = false
 }
 </script>
 
@@ -58,6 +69,11 @@ function onHistory() {
       <button class="submit-button" @click="onTopUp">Пополнить счет</button>
       <button class="submit-button" @click="onHistory">История транзакций</button>
     </div>
+    <CreateTopUpModal
+        v-if="showTopUpModal"
+        @close="onModalClose"
+        @completed="onTopUpCompleted"
+    />
   </div>
 </template>
 
