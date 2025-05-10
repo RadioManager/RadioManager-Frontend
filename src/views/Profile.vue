@@ -3,6 +3,7 @@ import {onMounted, computed, ref} from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useRadioStationStore } from '@/stores/radio_station'
 import CreateTopUpModal from '@/components/CreateTopUpModal.vue'
+import TransactionHistoryModal from "@/components/TransactionHistoryModal.vue";
 
 const userStore = useUserStore()
 const stationStore = useRadioStationStore()
@@ -11,6 +12,7 @@ const profile = computed(() => userStore.profile || {})
 const station = computed(() => stationStore.selectedStation)
 
 const showTopUpModal = ref(false)
+const showHistoryModal = ref(false)
 
 const roleLabel = computed(() => {
   switch (profile.value.role) {
@@ -32,7 +34,11 @@ function onTopUp() {
 }
 
 function onHistory() {
-  alert('История транзакций пока недоступна')
+  showHistoryModal.value = true
+}
+
+function onHistoryClose() {
+  showHistoryModal.value = false
 }
 
 function onTopUpCompleted() {
@@ -73,6 +79,10 @@ function onModalClose() {
         v-if="showTopUpModal"
         @close="onModalClose"
         @completed="onTopUpCompleted"
+    />
+    <TransactionHistoryModal
+        v-if="showHistoryModal"
+        @close="onHistoryClose"
     />
   </div>
 </template>
