@@ -2,7 +2,9 @@
    Общие стили для всех страниц
 ================================ */
 .page-wrapper {
-    max-width: 400px;
+    width: fit-content;
+    min-width: 400px;
+    max-width: 1400px;
     margin: 4rem auto;
     padding: 2rem;
     border-radius: 12px;
@@ -61,6 +63,28 @@
     outline: none;
     border-color: var(--color-primary-button-hover);
 }
+
+/* общий стиль для input и select */
+.form-group input,
+.form-group select,
+.styled-select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: var(--color-background-soft);
+    color: var(--color-input-text);
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.styled-select:focus {
+    outline: none;
+    border-color: var(--color-primary-button-hover);
+}
+
 
 /* ================================
    Кнопки
@@ -167,4 +191,52 @@
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
+}
+
+audio {
+
+}
+
+/* Стили для светлой темы */
+@media (prefers-color-scheme: light) {
+    audio::-webkit-media-controls-panel {
+        background-color: var(--color-background-mute); /* #f2f2f2 - чуть темнее белого фона */
+        border: 1px solid var(--color-border); /* #708090 - серый контур */
+        border-radius: 6px;
+    }
+
+    audio::-webkit-media-controls-play-button,
+    audio::-webkit-media-controls-mute-button,
+    audio::-webkit-media-controls-volume-slider,
+    audio::-webkit-media-controls-current-time-display,
+    audio::-webkit-media-controls-time-remaining-display,
+    audio::-webkit-media-controls-timeline {
+        filter: brightness(0.9); /* Уменьшение яркости для лучшего контраста */
+        color: var(--color-heading); /* #2c3e50 - цвет заголовков для текста */
+    }
+
+    audio::-webkit-media-controls-current-time-display,
+    audio::-webkit-media-controls-time-remaining-display {
+        color: var(--color-heading); /* #2c3e50 - цвет текста времени */
+    }
+
+    audio::-webkit-media-controls-volume-slider {
+        background-color: var(--color-border); /* #708090 - фон ползунка громкости */
+    }
+
+    audio::-webkit-media-controls-play-button {
+        background-color: var(--color-primary-button); /* #2980b9 - цвет кнопки воспроизведения */
+        border-radius: 50%;
+    }
+
+    audio::-webkit-media-controls-play-button:hover {
+        background-color: var(--color-primary-button-hover); /* #3498db - при наведении */
+    }
+}
+
+/* Для темной темы ничего не меняем, оставляем нативный вид */
+@media (prefers-color-scheme: dark) {
+    audio {
+        /* Нативный вид без дополнительных стилей */
+    }
 }

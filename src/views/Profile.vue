@@ -1,11 +1,110 @@
-<script setup lang="ts">
+<script setup>
+import {onMounted, computed, ref} from 'vue'
+import { useUserStore } from '@/stores/user'
+import { useRadioStationStore } from '@/stores/radio_station'
+import CreateTopUpModal from '@/components/CreateTopUpModal.vue'
+import TransactionHistoryModal from "@/components/TransactionHistoryModal.vue";
 
+const userStore = useUserStore()
+const stationStore = useRadioStationStore()
+
+const profile = computed(() => userStore.profile || {})
+const station = computed(() => stationStore.selectedStation)
+
+const showTopUpModal = ref(false)
+const showHistoryModal = ref(false)
+
+const roleLabel = computed(() => {
+  switch (profile.value.role) {
+    case 'ADMIN': return 'Админ'
+    case 'ADVERTISER': return 'Рекламодатель'
+    case 'RADIO_REPRESENTATIVE': return 'Представитель радиостанции'
+    default: return profile.value.role
+  }
+})
+
+onMounted(() => {
+  if (profile.value.role === 'RADIO_REPRESENTATIVE') {
+    stationStore.loadStationByRepresentativeId(profile.value.id)
+  }
+})
+
+function onTopUp() {
+  showTopUpModal.value = true
+}
+
+function onHistory() {
+  showHistoryModal.value = true
+}
+
+function onHistoryClose() {
+  showHistoryModal.value = false
+}
+
+function onTopUpCompleted() {
+  showTopUpModal.value = false
+}
+
+function onModalClose() {
+  showTopUpModal.value = false
+}
 </script>
 
 <template>
+  <div class="page-wrapper">
+    <h1 class="title">Профиль</h1>
 
+    <p class="profile-text">
+      <span class="profile-label">Имя:</span>&nbsp;{{ profile.name }}
+      &nbsp;&nbsp;<span class="profile-label">Фамилия:</span>&nbsp;{{ profile.surname }}
+    </p>
+
+    <p class="profile-text">
+      <span class="profile-label">Роль:</span>&nbsp;{{ roleLabel }}
+    </p>
+
+    <p class="profile-text">
+      <span class="profile-label">Баланс:</span>&nbsp;{{ profile.balance }} руб.
+    </p>
+
+    <p v-if="station" class="profile-text">
+      <span class="profile-label">Радиостанция:</span>&nbsp;{{ station.name }} ({{ station.frequency }} FM)
+    </p>
+
+    <div class="buttons">
+      <button class="submit-button" @click="onTopUp">Пополнить счет</button>
+      <button class="submit-button" @click="onHistory">История транзакций</button>
+    </div>
+    <CreateTopUpModal
+        v-if="showTopUpModal"
+        @close="onModalClose"
+        @completed="onTopUpCompleted"
+    />
+    <TransactionHistoryModal
+        v-if="showHistoryModal"
+        @close="onHistoryClose"
+    />
+  </div>
 </template>
 
 <style scoped>
+.profile-label {
+  color: var(--color-heading);
+  font-weight: 600;
+}
 
+.buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+
+.profile-text {
+  font-size: 1.2rem;
+  color: var(--color-heading);
+  line-height: 1.4;
+  margin: 0.5rem auto 0.5rem 0;
+  width: auto;
+}
 </style>

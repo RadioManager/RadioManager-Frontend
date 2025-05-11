@@ -110,7 +110,7 @@ export const useAudioRecordingStore = defineStore('audioRecording', {
             this.error = null
             try {
                 const updated = await audioService.updateAudioRecording(recDto)
-                const idx = this.recordings.findIndex(r => r.id === updated.id)
+                const idx = this.recordings.findIndex(r => r.recording.id === updated.id)
                 if (idx >= 0) this.recordings.splice(idx, 1, updated)
                 return updated
             } catch (e) {
@@ -129,7 +129,7 @@ export const useAudioRecordingStore = defineStore('audioRecording', {
             this.error = null
             try {
                 await audioService.deleteAudioRecording(id)
-                this.recordings = this.recordings.filter(r => r.id !== id)
+                this.recordings = this.recordings.filter(r => r.recording.id !== id)
             } catch (e) {
                 this.error = e.response?.data || e.message
             } finally {
@@ -147,7 +147,7 @@ export const useAudioRecordingStore = defineStore('audioRecording', {
             this.error = null
             try {
                 const rec = await audioService.updateAudioRecordingStatus(id, status)
-                const idx = this.recordings.findIndex(r => r.id === rec.id)
+                const idx = this.recordings.findIndex(r => r.recording.id === rec.id)
                 if (idx >= 0) this.recordings.splice(idx, 1, rec)
                 return rec
             } catch (e) {

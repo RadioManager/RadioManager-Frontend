@@ -26,6 +26,10 @@
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
 
   --color-input-text: rgba(44, 62, 80, 0.9);
+
+  --vt-c-audio-light: var(--vt-c-indigo);
+  --vt-c-audio-dark: var(--vt-c-white);
+
 }
 
 /* semantic color variables for Radio Manager project */
@@ -47,6 +51,8 @@
   --color-danger-button-hover: var(--vt-c-red-dark);
 
   --section-gap: 160px;
+
+  --color-audio: var(--vt-c-audio-light);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -61,6 +67,8 @@
     --color-heading: var(--vt-c-text-dark-1);
     --color-text: var(--vt-c-text-dark-2);
     --color-input-text: var(--vt-c-text-dark-1);
+
+    --color-audio: var(--vt-c-audio-dark);
   }
 }
 

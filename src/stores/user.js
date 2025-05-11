@@ -10,6 +10,27 @@ export const useUserStore = defineStore('user', {
         error: null,
     }),
     actions: {
+        async init() {
+            if (!this.profile) {
+                await this.fetchProfile()
+            }
+        },
+        async fetchProfile() {
+            this.loading = true
+            this.error = null
+            try {
+                const user = await authService.getProfile()
+                this.profile = user
+                this.isAuth = true
+                return user
+            } catch (e) {
+                this.profile = null
+                this.isAuth = false
+                return null
+            } finally {
+                this.loading = false
+            }
+        },
         async doLogin({ login, password }) {
             this.loading = true
             this.error = null

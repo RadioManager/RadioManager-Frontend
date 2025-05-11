@@ -54,3 +54,13 @@ export async function resetPassword({ verificationCode, newPassword }) {
     const response = await api.post('/auth/reset-password', { verificationCode, newPassword })
     return response.data
 }
+
+/**
+ * Get current user's profile using stored JWT in cookie (authenticated)
+ * GET /auth/me
+ * @returns {Promise<UserDto>}
+ */
+export async function getProfile() {
+    const response = await api.get('/auth/me')
+    return response.data
+}
