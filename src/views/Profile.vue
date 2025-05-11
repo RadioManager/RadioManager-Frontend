@@ -89,8 +89,8 @@ function onModalClose() {
 
 <style scoped>
 .profile-label {
-  color: var(--color-heading);  /* тот же цвет, что у заголовков */
-  font-weight: 600;             /* можно даже 700, если нужно жирнее */
+  color: var(--color-heading);
+  font-weight: 600;
 }
 
 .buttons {
@@ -99,11 +99,12 @@ function onModalClose() {
   margin-top: 1.5rem;
 }
 
-/* Новый стиль для текстовых значений в профиле */
+
 .profile-text {
-  font-size: 1.2rem;                /* чуть крупнее */
-  color: var(--color-heading);         /* меняется при смене темы */
+  font-size: 1.2rem;
+  color: var(--color-heading);
   line-height: 1.4;
   margin: 0.5rem auto 0.5rem 0;
+  width: auto;
 }
 </style>
