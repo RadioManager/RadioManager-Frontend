@@ -41,8 +41,11 @@ export const router = createRouter({
     routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach( async (to, from, next) => {
     const userStore = useUserStore()
+    if (!userStore.isAuth) {
+        await userStore.init()
+    }
     const isAuth = userStore.isAuth
     const userRole = userStore.profile?.role
 
@@ -50,7 +53,7 @@ router.beforeEach((to, from, next) => {
         return next({ name: 'Login' })
     }
     if (to.meta.roles && (!userRole || !to.meta.roles.includes(userRole))) {
-        return next({ name: 'Home' })  // redirect unauthorized to Home
+        return next({ name: 'Home' })
     }
     next()
 })
