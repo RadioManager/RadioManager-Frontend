@@ -11,7 +11,7 @@ const route = useRoute()
 
 const authPages = ['Login','Register','ForgotPassword','ResetPassword']
 const showHeader = computed(() =>
-    userStore.isAuth && !authPages.includes(route.name)
+    isAuth && !authPages.includes(route.name)
 )
 
 function onLogout() {
@@ -22,10 +22,7 @@ function onLogout() {
 
 <template>
   <div id="app">
-    <!-- Show header only when authenticated -->
     <AppHeader v-if="showHeader" @logout="onLogout" />
-
-    <!-- Route outlet: renders Login, Home, etc. -->
     <router-view />
   </div>
 </template>
