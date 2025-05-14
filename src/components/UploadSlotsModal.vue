@@ -36,18 +36,16 @@ async function onUpload() {
     <div class="modal-backdrop">
       <div class="modal">
         <header class="modal-header">
-          <h2>Загрузка пробелов из Excel</h2>
+          <h2 class="title">Загрузка пробелов из Excel</h2>
           <button class="close-btn" @click="emit('close')">×</button>
         </header>
         <div class="modal-content">
-          <p>Перед загрузкой убедитесь, что Excel-файл имеет следующие колонки:</p>
+          <p>Пред загрузкой убедитесь что Excel файл имеет следующие параметры:</p>
           <ul>
-            <li><strong>startTime</strong>: Дата и время начала (ISO 8601 или dd.MM.yyyy HH:mm)</li>
-            <li><strong>endTime</strong>: Дата и время конца</li>
-            <li><strong>status</strong>: AVAILABLE или OCCUPIED</li>
-            <li><strong>radioStationId</strong>: ID радиостанции</li>
+            <li>В нем должно быть два заполненных столбца соответственно начало и конец пробела</li>
+            <li>Нужно настроить формат ячейки как ДД.MM.ГГГГ чч:мм:сс для каждой ячейки</li>
           </ul>
-          <label class="submit-button" for="excelInput">Выбрать файл</label>
+          <label for="excelInput" class="submit-button">Выбрать файл</label>
           <input
               id="excelInput"
               type="file"
@@ -55,6 +53,7 @@ async function onUpload() {
               @change="onFileSelect"
               hidden
           />
+
           <p v-if="file" class="file-name">Выбран файл: {{ file.name }}</p>
 
           <button
@@ -71,3 +70,17 @@ async function onUpload() {
     </div>
   </teleport>
 </template>
+
+<style scoped>
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: var(--color-heading);
+}
+
+.file-name {
+  font-size: 0.95rem;
+  color: var(--color-heading);
+}
+</style>

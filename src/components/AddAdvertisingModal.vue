@@ -107,7 +107,7 @@ async function onAttach() {
     <div class="modal-backdrop">
       <div class="modal">
         <header class="modal-header">
-          <h2>Добавить рекламу</h2>
+          <h2 class="title">Добавить рекламу</h2>
           <button class="close-btn" @click="$emit('close')">×</button>
         </header>
         <div class="modal-content">
@@ -161,50 +161,90 @@ async function onAttach() {
 
 <style scoped>
 .modal-backdrop {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex; align-items: center; justify-content: center;
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 10000;
 }
+
 .modal {
-  background: var(--color-background-soft);
-  padding: 1.5rem; border-radius: 12px;
-  width: 90%; max-width: 480px;
+  background-color: var(--color-background-soft);
+  color: var(--color-text);
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 480px;
 }
+
 .modal-header {
-  display: flex; justify-content: space-between;
-  align-items: center; margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 .close-btn {
-  background: none; border: none; font-size: 1.5rem; cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .form-group {
   margin-bottom: 1rem;
 }
 .form-group label {
-  display: block; margin-bottom: .5rem; color: var(--color-heading);
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--color-heading);
+  font-weight: 600;
 }
 .form-group input,
 .form-group select {
-  width: 100%; padding: .75rem;
+  width: 100%;
+  padding: 0.75rem;
   border: 1px solid var(--color-border);
-  border-radius: 6px; font-size: 1rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: var(--color-background-soft);
+  color: var(--color-input-text);
 }
-.error {
-  color: var(--color-danger-button);
-  margin-top: .5rem; text-align: center;
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--color-primary-button-hover);
 }
+
 .submit-button {
-  padding: .75rem 1.25rem;
-  background: var(--color-primary-button);
-  color: #fff; border: none; border-radius: 6px;
-  cursor: pointer; font-size: 1rem;
-  transition: background-color .3s;
+  margin-top: 0.5rem;
+  background-color: var(--color-primary-button);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  transition: background-color 0.3s;
 }
 .submit-button:disabled {
-  opacity: .6; cursor: not-allowed;
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 .submit-button:hover:not(:disabled) {
-  background: var(--color-primary-button-hover);
+  background-color: var(--color-primary-button-hover);
+}
+
+.error {
+  margin-top: 0.5rem;
+  color: var(--color-danger-button);
+  text-align: center;
 }
 </style>
+
