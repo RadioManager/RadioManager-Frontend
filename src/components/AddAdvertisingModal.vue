@@ -63,14 +63,16 @@ async function onAttach() {
     const now = toLocalISOString()
     const created = []
     for (const slot of chosen) {
-      await splitBroadcastSlot(slot.id, selectedFileId.value)
       const dto = {
         broadcastSlotId: slot.id,
         audioRecordingId: selectedFileId.value,
         placementDate: now
       }
       const p = await placementStore.createPlacement(dto)
-      if (p) created.push(p)
+      if (p) {
+        await splitBroadcastSlot(slot.id, selectedFileId.value)
+        created.push(p)
+      }
     }
 
     if (created.length === 0) {
