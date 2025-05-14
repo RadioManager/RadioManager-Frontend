@@ -7,17 +7,14 @@ import '@/assets/common_styles.css'
 const userStore = useUserStore()
 const router = useRouter()
 
-// form state
 const form = reactive({
   login: '',
   password: ''
 })
 
-// loading and error from store
 const loading = computed(() => userStore.loading)
 const error = computed(() => userStore.error)
 
-// submit handler
 async function onSubmit() {
   const success = await userStore.doLogin({
     login: form.login,

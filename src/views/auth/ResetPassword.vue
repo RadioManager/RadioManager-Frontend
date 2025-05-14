@@ -21,17 +21,14 @@ async function onSubmit() {
 
   loading.value = true
   try {
-    // 1) Verify code
     await verifyResetCode({ code: code.value })
 
-    // 2) Reset password
     await resetPassword({
       verificationCode: code.value,
       newPassword: newPassword.value
     })
 
-    // 3) Redirect to login
-    router.push({ name: 'Login' })
+    await router.push({name: 'Login'})
   } catch (e) {
     error.value = e.response?.data || e.message
   } finally {

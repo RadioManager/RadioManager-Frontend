@@ -14,7 +14,6 @@ async function onSubmit() {
   error.value = null
   try {
     await sendPasswordResetCode({ email: email.value })
-    // after successful request, navigate to reset-password page
     await router.push({name: 'ResetPassword', query: {email: email.value}})
   } catch (e) {
     error.value = e.response?.data || e.message

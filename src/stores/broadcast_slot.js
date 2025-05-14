@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import * as broadcastSlotService from '@/services/broadcast_slot'
+import {toLocalISOString} from "@/utils/date.js";
 
 export const useBroadcastSlotStore = defineStore('broadcastSlot', {
     state: () => ({
@@ -299,6 +300,10 @@ export const useBroadcastSlotStore = defineStore('broadcastSlot', {
          */
         selectSlot(slot) {
             this.selectedSlot = slot
+        },
+        async loadFutureSlotsByStation(stationId) {
+            const now = toLocalISOString()
+            return this.loadSlotsAfterStartTime(stationId, now)
         }
     }
 })

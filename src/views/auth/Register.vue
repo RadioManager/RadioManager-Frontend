@@ -8,7 +8,6 @@ import '@/assets/common_styles.css'
 const userStore = useUserStore()
 const router = useRouter()
 
-// form state
 const form = reactive({
   login: '',
   password: '',
@@ -30,7 +29,6 @@ async function onSubmit() {
   }
   loading.value = true
   try {
-    // 1) Register
     const userDto = {
       id: 0,
       login: form.login,
@@ -43,10 +41,8 @@ async function onSubmit() {
     const registered = await userStore.doRegister(userDto)
     if (!registered) return
 
-    // 2) Auto-login
     await userStore.doLogin({ login: form.login, password: form.password })
 
-    // 3) Navigate or open modal
     if (form.role === 'RADIO_REPRESENTATIVE') {
       showStationModal.value = true
     } else {
@@ -108,7 +104,6 @@ function onModalClose() {
     </form>
     <p v-if="error" class="error">{{ error }}</p>
 
-    <!-- Вызов модалки для представителя -->
     <CreateStationModal
         v-if="showStationModal"
         @close="onModalClose"

@@ -14,7 +14,6 @@ const cities = ref([])
 const loading = ref(false)
 const error = ref(null)
 
-// DTO for station
 const station = ref({
   id: 0,
   name: '',

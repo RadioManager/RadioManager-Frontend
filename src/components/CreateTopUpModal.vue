@@ -15,6 +15,21 @@ const amount = ref(null)
 const loading = ref(false)
 const error = ref(null)
 
+function formatCardNumber(e) {
+  let digits = e.target.value.replace(/\D/g,'').slice(0,16)
+  const parts = digits.match(/.{1,4}/g) || []
+  cardNumber.value = parts.join(' ')
+}
+
+function formatExpiry(e) {
+  let digits = e.target.value.replace(/\D/g,'').slice(0,4)
+  if (digits.length > 2) {
+    expiry.value = digits.slice(0,2) + '/' + digits.slice(2)
+  } else {
+    expiry.value = digits
+  }
+}
+
 async function onSubmit() {
   error.value = null
   loading.value = true
@@ -55,6 +70,7 @@ async function onSubmit() {
             <input
                 id="cardNumber"
                 v-model="cardNumber"
+                @input="formatCardNumber"
                 type="text"
                 maxlength="19"
                 placeholder="1234 5678 9012 3456"
@@ -67,6 +83,7 @@ async function onSubmit() {
               <input
                   id="expiry"
                   v-model="expiry"
+                  @input="formatExpiry"
                   type="text"
                   maxlength="5"
                   placeholder="MM/YY"

@@ -164,14 +164,12 @@ th, td {
   color: var(--color-heading);
 }
 
-/* Выделяем заголовки */
 th {
   font-weight: 600;
   color: var(--color-heading);
   background-color: var(--color-background-soft);
 }
 
-/* Кнопка «Добавить запись» (label-for-file) */
 .submit-button {
   display: inline-block;
   padding: 0.75rem 1.5rem;
@@ -187,7 +185,6 @@ th {
   background-color: var(--color-primary-button-hover);
 }
 
-/* Кнопка удаления */
 .cancel-button {
   padding: 0.5rem 1rem;
   background-color: var(--color-danger-button);
