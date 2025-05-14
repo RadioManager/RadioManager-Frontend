@@ -16,7 +16,6 @@ import { computed } from 'vue'
 
 const userStore = useUserStore()
 
-// Only show "Audio" link for ADMIN or ADVERTISER roles
 const isAdminOrAdvertiser = computed(
     () => ['ADMIN', 'ADVERTISER'].includes(userStore.profile?.role)
 )

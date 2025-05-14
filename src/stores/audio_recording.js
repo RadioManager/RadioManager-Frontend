@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import * as audioService from '@/services/audio_recording'
+import {useUserStore} from "@/stores/user.js";
 
 export const useAudioRecordingStore = defineStore('audioRecording', {
     state: () => ({
@@ -163,6 +164,30 @@ export const useAudioRecordingStore = defineStore('audioRecording', {
          */
         selectRecording(rec) {
             this.selectedRecording = rec
-        }
+        },
+        /**
+         * Load approved recordings: for ADMIN all approved, for others only their own
+         */
+        async loadAllowedRecordings() {
+            this.loading = true
+            this.error = null
+            try {
+                const userStore = useUserStore()
+                // get all approved recordings
+                const approved = await audioService.getRecordingsByStatus('APPROVED')
+                if (userStore.profile?.role === 'ADMIN') {
+                    this.recordings = approved
+                } else {
+                    // only recordings owned by user
+                    this.recordings = approved.filter(r => r.recording.userId === userStore.profile.id)
+                }
+                return this.recordings
+            } catch (e) {
+                this.error = e.response?.data || e.message
+                return []
+            } finally {
+                this.loading = false
+            }
+        },
     }
 })

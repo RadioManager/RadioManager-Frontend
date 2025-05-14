@@ -1,6 +1,12 @@
 import {defineStore} from 'pinia'
 import * as authService from '@/services/auth'
 import * as userService from '@/services/user'
+import {useCityStore} from "@/stores/city.js";
+import {useRadioStationStore} from "@/stores/radio_station.js";
+import {useBroadcastSlotStore} from "@/stores/broadcast_slot.js";
+import {useAudioRecordingStore} from "@/stores/audio_recording.js";
+import {usePlacementStore} from "@/stores/placement.js";
+import {useTransactionStore} from "@/stores/transaction.js";
 
 export const useUserStore = defineStore('user', {
     state: () => ({
@@ -65,9 +71,17 @@ export const useUserStore = defineStore('user', {
             try {
                 await authService.logout()
             } catch {
+                // ignore network errors
             } finally {
-                this.profile = null
-                this.isAuth = false
+                // reset all Pinia stores
+                this.$reset()
+                useCityStore().$reset()
+                useRadioStationStore().$reset()
+                useBroadcastSlotStore().$reset()
+                useAudioRecordingStore().$reset()
+                usePlacementStore().$reset()
+                useTransactionStore().$reset()
+
                 this.loading = false
             }
         },
