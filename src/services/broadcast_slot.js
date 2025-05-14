@@ -232,3 +232,16 @@ export async function getSlotsByMonth(year, month) {
     const response = await api.get('/broadcast-slot/by-month', { params: { year, month } })
     return response.data
 }
+
+/**
+ * GET priority multiplier.
+ * GET /broadcast-slot/priority-multiplier?highPriority={highPriority}
+ * @param {boolean} highPriority
+ * @returns {Promise<number>}
+ */
+export async function getPriorityMultiplier(highPriority) {
+    const response = await api.get('/broadcast-slot/priority-multiplier', {
+        params: { highPriority }
+    });
+    return response.data;
+}
