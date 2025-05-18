@@ -12,6 +12,8 @@ const transactions = ref([])
 
 const profile = computed(() => userStore.profile || {})
 
+const isAdmin = computed(() => profile.value.role === 'ADMIN')
+
 onMounted(async () => {
   if (profile.value.role === 'ADMIN') {
 
@@ -42,7 +44,7 @@ function getExecutorName(adminId) {
           <table>
             <thead>
             <tr>
-              <th class="header-cell">Исполнитель</th>
+              <th v-if="isAdmin" class="header-cell">Исполнитель</th>
               <th class="header-cell nowrap">Сумма (₽)</th>
               <th class="header-cell">Описание</th>
               <th class="header-cell nowrap">Время</th>
@@ -50,7 +52,7 @@ function getExecutorName(adminId) {
             </thead>
             <tbody>
             <tr v-for="tx in transactions" :key="tx.id">
-              <td class="nowrap">{{ getExecutorName(tx.adminId) }}</td>
+              <td v-if="isAdmin" class="nowrap">{{ getExecutorName(tx.adminId) }}</td>
               <td class="nowrap">{{ tx.amount.toFixed(2) }}</td>
               <td class="description">{{ tx.description }}</td>
               <td class="nowrap">{{ formatDate(tx.transactionDate) }}</td>
