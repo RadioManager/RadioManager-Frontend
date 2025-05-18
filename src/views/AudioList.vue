@@ -60,6 +60,7 @@ function getFileName(path) {
 async function onStatusChange(id, status) {
   try {
     await audioStore.updateRecordingStatus(id, status)
+    await audioStore.loadAllowedRecordings()
   } catch (e) {
     alert('Ошибка при обновлении статуса: ' + (e.response?.data || e.message))
   }
