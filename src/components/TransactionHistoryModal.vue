@@ -26,7 +26,7 @@ onMounted(async () => {
 
 
 function getExecutorName(adminId) {
-  return adminId === 1 ? 'Система' : `Админ с ID ${adminId}`
+  return adminId === 2147483647 ? 'Система' : `Админ с ID ${adminId}`
 }
 </script>
 
