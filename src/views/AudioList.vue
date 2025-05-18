@@ -3,6 +3,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useAudioRecordingStore } from '@/stores/audio_recording'
 import { getUserById } from '@/services/user'
+import {onBeforeRouteUpdate} from "vue-router";
 
 const userStore = useUserStore()
 const audioStore = useAudioRecordingStore()
@@ -42,6 +43,11 @@ async function loadRecordings() {
 
 onMounted(() => {
   loadRecordings()
+})
+
+onBeforeRouteUpdate((to, from, next) => {
+  loadRecordings()
+  next()
 })
 
 async function onFileSelect(event) {

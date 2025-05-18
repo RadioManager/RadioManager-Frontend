@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import {ref, computed, onMounted, onUnmounted} from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useAudioRecordingStore } from '@/stores/audio_recording'
 import { usePlacementStore } from '@/stores/placement'
@@ -33,8 +33,15 @@ const canSubmit = computed(() =>
 )
 
 onMounted(async () => {
+  files.value = []
+  audioStore.$reset()
   await audioStore.loadAllowedRecordings()
   files.value = audioStore.recordings
+})
+
+onUnmounted(() => {
+  files.value = []
+  audioStore.$reset()
 })
 
 async function onAttach() {
