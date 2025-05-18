@@ -37,6 +37,11 @@ const showUploadModal = ref(false)
 const showAdModal = ref(false)
 const slotAudio = ref({})
 
+const statusLabels = {
+  AVAILABLE: 'Не занят',
+  OCCUPIED:  'Занят'
+}
+
 onMounted(async () => {
   if (isAdmin.value || isAdvertiser.value) {
     await cityStore.loadAllCities()
@@ -169,7 +174,7 @@ async function loadPlacementsAndAudio() {
         <tr v-for="slot in slots" :key="slot.id">
           <td>{{ formatDate(slot.startTime) }}</td>
           <td>{{ formatDate(slot.endTime) }}</td>
-          <td>{{ slot.status }}</td>
+          <td>{{ statusLabels[slot.status] }}</td>
           <td>
             <audio
                 v-if="slotAudio[slot.id]"

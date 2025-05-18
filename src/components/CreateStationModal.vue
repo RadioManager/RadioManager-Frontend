@@ -50,7 +50,6 @@ async function onSubmit() {
       <div class="modal">
         <header class="modal-header">
           <h2 class="title">Создание радиостанции</h2>
-          <button class="close-btn" @click="emit('close')">×</button>
         </header>
         <form @submit.prevent="onSubmit" class="form">
           <div class="form-group">
